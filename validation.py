@@ -116,6 +116,9 @@ def get_scores_in_clip(scores, clip, metadata_np, metadata, per_frame_scores_roo
                 clip_gt[t] = 1
     else:
         clip_gt = np.load(clip_res_fn)
+        if args.dataset == 'UBnormal':
+            # 1 - value for each
+            clip_gt = np.ones_like(clip_gt) - clip_gt
 
     scores_zeros = np.ones(clip_gt.shape[0]) * (- np.inf)
     if len(clip_fig_idxs) == 0:

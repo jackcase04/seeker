@@ -41,7 +41,7 @@ class SeeKerTrainer:
     def load_checkpoint(self, filename):
         filename = filename
         try:
-            checkpoint = torch.load(filename)
+            checkpoint = torch.load(filename, weights_only=False)
             self.start_epoch = checkpoint['epoch']
             self.model.load_state_dict(checkpoint['state_dict'], strict=False)
             # self.model.set_actnorm_init()
@@ -72,10 +72,8 @@ class SeeKerTrainer:
             + torch.sum(logvar, dim=-1) + x_tgt.shape[-1] * math.log(math.pi * 2))
         
         return lnp
-    
 
-
-    def train(self, clip=100):
+    def train(self, clip=1.0):
         start_epoch = 0
         num_epochs = self.args.epochs
         self.model.train()
@@ -103,7 +101,11 @@ class SeeKerTrainer:
 
             self.log_writer.add_scalar('NLL Loss', negloglik_loss.item(), epoch )
 
-            if self.dataset not in ["ShangaiTech", "MSAD"]:
+            val_gt_dir = os.path.join("data", self.dataset, "gt", "validation")
+            has_val_gt = os.path.isdir(val_gt_dir) and len(os.listdir(val_gt_dir)) > 0
+            if self.dataset == "UBnormal" and not has_val_gt:
+                auc_val = 0
+            elif self.dataset not in ["ShangaiTech", "MSAD"]:
                 auc_val = self.validate()
                 all_val_auc[epoch] = auc_val
             else:
@@ -163,7 +165,7 @@ class SeeKerTrainer:
             B, T, N, _ = x.shape    
 
             with torch.no_grad():
-                lnp =  self.joint_lnp_full_window(x.float())
+                lnp =  self.joint_lnp(x.float())
 
                 pad = torch.randn(B, (T-1)*N).to(self.args.device)
                 nll = - torch.cat((pad, lnp), dim=1)
@@ -174,7 +176,7 @@ class SeeKerTrainer:
         anomaly_scores_kp = probs.cpu().detach().numpy().squeeze().copy(order='C')
 
 
-        auc, frame_scores, frame_gt = score_anomalies(anomaly_scores_kp, self.test_metadata, args=self.args, split='test', sigma=sigma)
+        auc, frame_scores, frame_gt = score_anomalies(anomaly_scores_kp, self.test_metadata, args=self.args, split='test', sigma=sigma, ret_gt=True)
 
         print("AUC on test forward:", auc)
         if ret_all:
