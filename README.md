@@ -39,6 +39,7 @@ Clone the repository and install dependencies:
 ```bash
 git clone https://github.com/yourusername/SeeKer.git
 cd SeeKer
+pip install torch --index-url https://download.pytorch.org/whl/cu128
 pip install -r requirements.txt
 ```
 
