@@ -10,5 +10,10 @@ for filename in $INP_DIR_NAME*
 do
     FULL_PATH=$filename
     FILE_NAME=$(basename ${filename} | cut -d '.' -f 1)
-    ffmpeg -i $FULL_PATH -c:v libx264 -c:a aac "${OUT_DIR_NAME}${FILE_NAME}.mp4"
+
+    if [ ! -f "${OUT_DIR_NAME}${FILE_NAME}.mp4" ]; then
+        ffmpeg -i $FULL_PATH -c:v libx264 -c:a aac "${OUT_DIR_NAME}${FILE_NAME}.mp4"
+    else
+        echo "${FILE_NAME}.mp4 already exists, skipping"
+    fi
 done

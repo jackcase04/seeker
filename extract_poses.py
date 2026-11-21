@@ -14,7 +14,7 @@ def extract(video_path, out_dir):
 
     stem = os.path.splitext(os.path.basename(video_path))[0]
     json_path = os.path.join(out_dir, f"{stem}_alphapose_tracked_person.json")
-    vis_path = os.path.join(out_dir, f"{stem}_annotated.mp4")
+    vis_path = os.path.join("video", "annotated", f"{stem}_annotated.mp4")
 
     model = YOLO(model_name)
 
