@@ -2,13 +2,13 @@ import random
 import numpy as np
 import torch
 from torch.utils.tensorboard import SummaryWriter
-from args import create_exp_dirs
-from args import init_parser, init_sub_args
-from dataset import get_dataset_and_loader
+from src.args import create_exp_dirs
+from src.args import init_parser, init_sub_args
+from src.dataset import get_dataset_and_loader
 
-from models.partial_autoregressive import PartialAutoregressiveFC
-from training import SeeKerTrainer
-from utils.training_utils import init_optimizer
+from src.models.partial_autoregressive import PartialAutoregressiveFC
+from src.training import SeeKerTrainer
+from src.utils.training_utils import init_optimizer
 
 
 def main():

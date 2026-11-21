@@ -1,7 +1,7 @@
 from typing import List, Tuple
 import torch.nn as nn
 from torch import Tensor
-from models.made.made_partial import MADEPartial
+from src.models.made.made_partial import MADEPartial
 
 
 class  PartialAutoregressiveFC(nn.Module):

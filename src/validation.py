@@ -7,8 +7,8 @@ from scipy.ndimage import gaussian_filter1d
 from sklearn.metrics import roc_auc_score, roc_curve, average_precision_score
 
 
-from utils.scoring_utils import fill_and_smooth_fw
-from utils.data_utils import shanghaitech_hr_skip
+from src.utils.scoring_utils import fill_and_smooth_fw
+from src.utils.data_utils import shanghaitech_hr_skip
 
 def score_anomalies(scores_kp, metadata, args=None, split='test', ret_gt=False, sigma=0):
     gt_arr, scores_arr = get_all_frame_scores(scores_kp, metadata, args=args, split=split, sigma=sigma)

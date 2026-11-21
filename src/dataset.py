@@ -6,8 +6,8 @@ from torch.utils.data import Dataset
 from tqdm import tqdm
 from torch.utils.data import DataLoader
 
-from utils.data_utils import normalize_pose, shanghaitech_hr_skip
-from utils.sequence_utils import clip_to_segments
+from src.utils.data_utils import normalize_pose, shanghaitech_hr_skip
+from src.utils.sequence_utils import clip_to_segments
 
 
 class SkeletonSequenceDataset(Dataset):

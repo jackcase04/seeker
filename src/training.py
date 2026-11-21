@@ -3,7 +3,7 @@ import shutil
 import torch
 from tqdm import tqdm
 import math
-from validation import score_anomalies
+from src.validation import score_anomalies
 
 
 class SeeKerTrainer:

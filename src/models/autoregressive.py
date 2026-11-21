@@ -1,7 +1,7 @@
 from typing import List, Tuple
 import torch.nn as nn
 from torch import Tensor
-from models.made.made import MADE
+from src.models.made.made import MADE
 
 
 class  AutoregressiveFC(nn.Module):
