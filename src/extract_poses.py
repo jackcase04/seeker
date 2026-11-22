@@ -16,6 +16,8 @@ def extract(video_path, out_dir):
     json_path = os.path.join(out_dir, f"{stem}_alphapose_tracked_person.json")
     vis_path = os.path.join("video", "annotated", f"{stem}_annotated.mp4")
 
+    print(f"Processing file: {stem}")
+
     model = YOLO(model_name)
 
     # Set up OpenCV with all the information from the captured video
@@ -37,7 +39,7 @@ def extract(video_path, out_dir):
             break
 
         frame_idx += 1
-        print(f"Processing frame {frame_idx}/{total}")
+        print(f"\rProcessing frame {frame_idx}/{total}", end="", flush=True)
 
         results = model.track(frame, persist=True, verbose=False)
         result = results[0]
